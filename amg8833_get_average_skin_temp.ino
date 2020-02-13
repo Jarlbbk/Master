@@ -50,7 +50,9 @@ void setup() {
 void loop() { 
     get_skin_temp();
 }
-
+// To do: - Eliminate unnecessary lines of code
+//        - Write code that generates an average reading of skin temperature over time and use this to see if the person is sick
+//        - Send message to the app that the person is sick
 
 void get_skin_temp(){
    //read all the pixels
