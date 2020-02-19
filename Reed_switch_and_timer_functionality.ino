@@ -5,8 +5,11 @@ unsigned long time1;
 unsigned long time2;
 unsigned long total_time;
 
-int counter=0; //counter for number of magnets passed, starts at 0
-int if_killer=1; //used to exit if after magnet is no longer close to reed switch
+
+
+int counter = 0; //counter for number of magnets passed, starts at 0
+int if_killer = 1; //used to exit if after magnet is no longer close to reed switch
+int answer;
 
 void setup() 
 {
@@ -20,11 +23,66 @@ void setup()
 void loop() 
 {
 
-  measure_time ();
+  answer = measure_time ();
   //To do: - measure_time must probably return a value to be able to send it to the app--> not a void function
 }
 
-void measure_time (){
+
+int measure_time (){
+  
+  int proximity = digitalRead(REED_PIN); // Read the state of the switch
+
+  if (proximity == LOW && counter == 0) {
+    time1 = millis(); //measure the time at first instance of magnet passing
+    
+    counter = 1;
+    Serial.print("Time1 is : ");
+    Serial.println(time1);
+    //if_killer = 0;
+    /*while (proximity == LOW){
+      proximity = digitalRead(REED_PIN); // prevents time1 from being updated constantly while near the first magnet
+    }*/
+    
+  }
+
+  if (proximity == HIGH && counter == 1){
+    counter = 2;
+  }
+
+//must now ensure that Safestep has passed the first magnet before taking the next time measure
+  if (proximity == LOW && counter == 2){
+    time2 = millis(); //time when passing second magnet
+    
+    //if_killer = 2; 
+    Serial.print("Time2 is: ");
+    Serial.println(time2);
+    /*while (proximity == LOW){
+      proximity = digitalRead(REED_PIN); //prevents time2 from being updated constantly while near the second magnet
+    }*/
+    total_time = time2-time1;
+    counter = 3;
+    Serial.print("Total time: ");
+    Serial.println(total_time);
+  }
+
+  if (proximity == HIGH && counter == 3) {
+    counter = 0;
+  }
+  /*if( if_killer == 2){
+    if_killer = 1; //resets condition for first if statement
+    counter = 0; //resets condition for second if statement
+  }*/
+  return total_time; //Must return the time it has taken to store it for the statistics
+}
+
+
+
+
+
+
+//Below is the first code I wrote
+
+/*void measure_time (){
   int proximity = digitalRead(REED_PIN); // Read the state of the switch
 
   if (proximity == LOW && if_killer==1) {
@@ -58,4 +116,4 @@ void measure_time (){
     if_killer = 1; //resets condition for first if statement
     counter = 0; //resets condition for second if statement
   }
-}
+}*/
