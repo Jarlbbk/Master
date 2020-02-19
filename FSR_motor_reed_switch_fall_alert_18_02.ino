@@ -152,7 +152,8 @@ int is_walking (){
 
 int fall_alarm(int FSR, int is_walking){
   int ans = 0;
-  if (FSR < 20 && is_walking == 1){ //if FSR is not recieving pressure and the person is walking
+  if (FSR < 20 && is_walking == 1){ //if FSR is not recieving pressure and the person is walking, the value FSR is less than must be based
+   //on something, this one is picked at random
     ans = 1;
   }
   return ans;
