@@ -16,7 +16,7 @@ class Motor
 		
 		Motor(const int MotorPin1, const int MotorPin2, FSR* fsr_ref); //the MotorPins must be PWM pins
 		// for fsr_ref must first initialize an FSR object, then I must creat an FSR* to that FSR objetc,
-		this FSR* must go in Motor constructor 
+		//this FSR* must go in Motor constructor 
 		~Motor();
 		void setup();
 		void loop();
