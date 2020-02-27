@@ -2,7 +2,7 @@
 #include "Arduino.h"
 
 
-Timer_Func_And_Reed_Switch::Timer_Func_And_Reed_Switch(int PinNumber) : counter{0}, pin{PinNumber} {}
+Timer_Func_And_Reed_Switch::Timer_Func_And_Reed_Switch(int PinNumber) : counter{0}, pin{PinNumber}, time1{0}, time2{0}, total_time{0} {}
 
 void Timer_Func_And_Reed_Switch::setup() {
       pinMode(pin, INPUT_PULLUP);
